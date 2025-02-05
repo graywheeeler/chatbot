@@ -142,11 +142,9 @@ from langchain_community.utilities import SQLDatabase
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
-def init_database(
-    user:str, password:str, host:str, port:str, database:str
-) -> SQLDatabase:
-    db_uri = f"mysql+mysqlconnector://{st.secrets['database']['user']}:{st.secrets['database']['password']}@{st.secrets['database']['host']}:{st.secrets['database']['port']}/{st.secrets['database']['database']}"
-    return SQLDatabase.from_uri(db_uri)
+def init_database(user: str, password: str, host: str, port: str, database: str) -> SQLDatabase:
+  db_uri = f"mysql+mysqlconnector://{user}:{password}@{host}:{port}/{database}"
+  return SQLDatabase.from_uri(db_uri)
 
 def getSQLChain(db):
     template = """
@@ -230,39 +228,39 @@ st.set_page_config(page_title="Nouri Chatbot", page_icon="n_icon.jpeg", layout="
 
 st.title("Nouri AI CRM Assistant")
 
-with st.sidebar:
-    st.subheader("Database Connection")
-    st.write("This AI Chatbot assistant allows the customer to query their own data, better enhancing the user's ability to cultivate personal connections.")
-    
-    if st.button("Connect to Database"):
-        with st.spinner("Connecting to database..."):
-            db = init_database()
-            if db:
-                st.session_state.db = db
-                st.success("Connected to database!")
-
 # with st.sidebar:
 #     st.subheader("Database Connection")
-#     st.write("This AI Chatbot assistant allows the customer to query their own data, better enhancing the" 
-#     " user's ability to cultivate personal connections.")
+#     st.write("This AI Chatbot assistant allows the customer to query their own data, better enhancing the user's ability to cultivate personal connections.")
     
-#     st.text_input("Host", value="localhost", key="Host")
-#     st.text_input("Port", value="3306", key="Port")
-#     st.text_input("User", value="root", key="User")
-#     st.text_input("Password", type="password", value="gray1380", key="Password")
-#     st.text_input("Database", value="sys", key="Database")
-    
-#     if st.button("Connect"):
+#     if st.button("Connect to Database"):
 #         with st.spinner("Connecting to database..."):
-#             db = init_database(
-#                 st.session_state["User"],
-#                 st.session_state["Password"],
-#                 st.session_state["Host"],
-#                 st.session_state["Port"],
-#                 st.session_state["Database"]
-#             )
-#             st.session_state.db = db
-#             st.success("Connected to database!")
+#             db = init_database()
+#             if db:
+#                 st.session_state.db = db
+#                 st.success("Connected to database!")
+
+with st.sidebar:
+    st.subheader("Database Connection")
+    st.write("This AI Chatbot assistant allows the customer to query their own data, better enhancing the" 
+    " user's ability to cultivate personal connections.")
+    
+    st.text_input("Host", value="localhost", key="Host")
+    st.text_input("Port", value="3306", key="Port")
+    st.text_input("User", value="root", key="User")
+    st.text_input("Password", type="password", value="gray1380", key="Password")
+    st.text_input("Database", value="sys", key="Database")
+    
+    if st.button("Connect"):
+        with st.spinner("Connecting to database..."):
+            db = init_database(
+                st.session_state["User"],
+                st.session_state["Password"],
+                st.session_state["Host"],
+                st.session_state["Port"],
+                st.session_state["Database"]
+            )
+            st.session_state.db = db
+            st.success("Connected to database!")
     
 for message in st.session_state.chat_history:
     if isinstance(message, AIMessage):
