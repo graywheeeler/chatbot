@@ -8,7 +8,6 @@ from langchain_groq import ChatGroq
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.utilities import SQLDatabase
 
-
 def init_database(
     user:str, password:str, host:str, port:str, database:str
 ) -> SQLDatabase:
