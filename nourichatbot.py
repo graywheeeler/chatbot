@@ -1,4 +1,3 @@
-from langchain_openai import ChatOpenAI
 import streamlit as st
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.messages import AIMessage, HumanMessage
@@ -131,7 +130,7 @@ if user_query and user_query.strip():
         st.markdown(response)
             
     st.session_state.chat_history.append(AIMessage(content=response))
-    
+
 # from langchain_openai import ChatOpenAI
 # import streamlit as st
 # from langchain_core.runnables import RunnablePassthrough
